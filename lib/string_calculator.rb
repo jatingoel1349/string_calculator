@@ -9,6 +9,9 @@ class StringCalculator
       parts = numbers.split("\n", 2)
       # Extract the dynamic delimiter
       delimiter = Regexp.escape(parts[0][2..]) 
+      if parts[0].include?("*")
+        operation = :* # Change operation to multiplication if * is in the delimiter
+      end
       numbers = parts[1]
     end
 
@@ -19,6 +22,6 @@ class StringCalculator
       raise "negative numbers not allowed: #{negatives_num.join(', ')}"
     end
 
-    arr.sum
+    operation == :* ? arr.reduce(1, :*) : arr.sum
   end
 end
